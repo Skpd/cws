@@ -41,8 +41,13 @@ if __name__ == '__main__':
 
     example_client = WebsocketClient(api_key=api_key, api_secret=api_secret)
 
+    # adding message handler to subscribe to market updates once authenticated
     example_client.add_handler('authenticationResult', subscribe)
+
+    # adding handler to show market updates
     example_client.add_handler('marketUpdate', market_update)
+
+    # misc handlers to improve visibility
     example_client.add_handler('subscriptionResult', lambda a, b: a.logger.info(f'Subscribed to {b.status.keys}'))
     example_client.add_handler('bandwidthUpdate', lambda a, b: a.logger.info(f'Bandwidth Update: {b}'))
 

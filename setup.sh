@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
-VENV="./venv"
+BASE="$(dirname "$0")"
+VENV="venv"
+PYTHON_EX="python3.7"
+
+cd ${BASE}
+
 # init virtual environment. use any python >= 3.6
-python3.7 -m venv ${VENV}
+if [[ ! -d $VENV ]]; then
+    ${PYTHON_EX} -m venv ${VENV}
+else
+    echo "Using already installed venv $VENV"
+fi
 
 # install python libraries
 ${VENV}/bin/pip install -r requirements.txt
