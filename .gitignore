@@ -1,3 +1,7 @@
 venv
 .idea
 __pycache__/
+
+markets/*_pb2.py
+client/*_pb2.py
+stream/*_pb2.py

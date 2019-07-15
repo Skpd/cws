@@ -5,8 +5,8 @@ import logging
 from datetime import datetime
 from logging import Logger
 from websocket import WebSocketApp
-from proto.client.client_pb2 import ClientMessage
-from proto.stream.stream_pb2 import StreamMessage
+from client.client_pb2 import ClientMessage
+from stream.stream_pb2 import StreamMessage
 
 
 class WebsocketClient:

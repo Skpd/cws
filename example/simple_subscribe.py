@@ -1,8 +1,8 @@
 import sys
 sys.path.append(".")
 
-from client import WebsocketClient
-from proto.client.client_pb2 import ClientMessage
+from cws_client import WebsocketClient
+from client.client_pb2 import ClientMessage
 
 
 def subscribe(c, message):
