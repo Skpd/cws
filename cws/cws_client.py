@@ -97,6 +97,9 @@ class WebsocketClient:
     def run(self):
         self._wsa.run_forever()
 
+    def close(self):
+        self._wsa.close()
+
     def _on_open(self):
         self.logger.info('Open')
         self._do_auth()

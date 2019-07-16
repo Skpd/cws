@@ -1,6 +1,7 @@
 import setuptools
+import os
 
-with open("README.md") as fh:
+with open(os.path.dirname(os.path.realpath(__file__)) + "/README") as fh:
     long_description = fh.read()
 
 setuptools.setup(
@@ -12,7 +13,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/skpd/cws",
-    packages=setuptools.find_packages(),
+    packages=['cws', 'cws.client', 'cws.markets', 'cws.stream'],
     python_requires='>=3.6',
     install_requires=['websocket-client'],
     classifiers=[
