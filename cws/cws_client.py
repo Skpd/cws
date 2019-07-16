@@ -5,8 +5,8 @@ import logging
 from datetime import datetime
 from logging import Logger
 from websocket import WebSocketApp
-from client.client_pb2 import ClientMessage
-from stream.stream_pb2 import StreamMessage
+from cws.client.client_pb2 import ClientMessage
+from cws.stream.stream_pb2 import StreamMessage
 
 
 class WebsocketClient:
@@ -103,7 +103,7 @@ class WebsocketClient:
 
     def _do_auth(self):
         m = ClientMessage()
-        nonce = str(int(datetime.now().timestamp()*1000))
+        nonce = str(int(datetime.utcnow().timestamp() * 1_000_000_000))
 
         key_hash = hmac.new(
             base64.b64decode(self._api_secret),

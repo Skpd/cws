@@ -1,5 +1,5 @@
 from unittest import TestCase
-from cws_client import WebsocketClient
+from cws.cws_client import WebsocketClient
 
 
 class TestWebsocketClient(TestCase):

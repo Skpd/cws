@@ -1,8 +1,5 @@
-import sys
-sys.path.append(".")
-
-from cws_client import WebsocketClient
-from client.client_pb2 import ClientMessage
+from cws.cws_client import WebsocketClient
+from cws.client.client_pb2 import ClientMessage
 
 
 def subscribe(c, message):
@@ -24,6 +21,8 @@ def subscribe(c, message):
 
         # send subscription message subscribing to spread updates
         c.send(msg.SerializeToString())
+    else:
+        c.logger.warning(f'Authenticate result: {message}')
 
 
 def market_update(c, m):
@@ -34,7 +33,7 @@ def market_update(c, m):
 
 
 if __name__ == '__main__':
-    # REPLACE IT WITH YOUR API KEYS WHEN/IF ENFORCED
+    # REPLACE WITH YOUR API KEYS
     api_key = 'xxxxxxxxxxxxxxxxxxxx'
     api_secret = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     # -----------------------------
