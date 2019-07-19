@@ -1,6 +1,6 @@
 from threading import Thread
 from time import sleep
-
+from google.protobuf.json_format import ParseDict, MessageToDict
 from cws.cws_client import WebsocketClient
 from cws.client.client_pb2 import ClientMessage
 
@@ -12,15 +12,20 @@ def subscribe(c, message):
 
         # we'll subscribe to spread updates in this example
         # use * instead of market ID to subscribe to all markets
-        msg = ClientMessage()
 
-        # subscribe to bitfinex:ltc-usd spread updates
-        s1 = msg.subscribe.subscriptions.add()
-        s1.stream_subscription.resource = 'markets:2:book:spread'
+        # subscribe to bitfinex:ltc-usd and kraken:btc-usd spread updates
+        msg_data = {
+            'subscribe': {
+                'subscriptions': [
+                    {'streamSubscription': {'resource': 'markets:2:book:spread'}},
+                    {'streamSubscription': {'resource': 'markets:87:book:spread'}},
+                ]
+            }
+        }
 
-        # subscribe to kraken:btc-usd spread updates
-        s2 = msg.subscribe.subscriptions.add()
-        s2.stream_subscription.resource = 'markets:87:book:spread'
+        # build msg from dict if it looks easier
+        # see simple_subscribe for example on how to build message manually
+        msg = ParseDict(msg_data, ClientMessage())
 
         # send subscription message subscribing to spread updates
         c.send(msg.SerializeToString())
@@ -29,9 +34,13 @@ def subscribe(c, message):
 
 
 def market_update(c, m):
+    # convert to dict if it is easier to use
+    msg_data = MessageToDict(m)
+
+    order_book = msg_data['orderBookSpreadUpdate']
     c.logger.info(
-        f'MarketID: {m.market.marketId}; '
-        f'Spread: {m.orderBookSpreadUpdate.bid.priceStr} - {m.orderBookSpreadUpdate.ask.priceStr}'
+        f"MarketID: {msg_data['market']['marketId']}; "
+        f"Spread: {order_book['bid']['priceStr']} - {order_book['ask']['priceStr']}"
     )
 
 
